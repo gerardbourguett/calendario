@@ -122,7 +122,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
-                <button type="button" class="btn btn-warning" id="btnEditar">Editar</button>
+                <button type="button" class="btn btn-primary" id="btnEditar">Editar</button>
                 <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
             </div>
@@ -130,7 +130,14 @@
     </div>
 </div>
 
-
+<script>
+    $(document).ready(function() {
+        $('.datetimepicker').datetimepicker({
+            format: 'Y-m-d H:i',
+            step: 30
+        });
+    });
+</script>
 
 
 @endsection

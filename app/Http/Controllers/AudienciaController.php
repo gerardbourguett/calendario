@@ -62,9 +62,11 @@ class AudienciaController extends Controller
      * @param  \App\Models\Audiencia  $audiencia
      * @return \Illuminate\Http\Response
      */
-    public function edit(Audiencia $audiencia)
+    public function edit($id)
     {
         //
+        $audiencia = Audiencia::find($id);
+        return response()->json($audiencia);
     }
 
     /**
@@ -77,6 +79,10 @@ class AudienciaController extends Controller
     public function update(Request $request, Audiencia $audiencia)
     {
         //
+        request()->validate(Audiencia::$rules);
+        $audiencia->update($request->all());
+
+        return response()->json(['success' => 'Audiencia actualizada correctamente']);
     }
 
     /**
@@ -85,8 +91,12 @@ class AudienciaController extends Controller
      * @param  \App\Models\Audiencia  $audiencia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Audiencia $audiencia)
+    public function destroy($id)
     {
         //
+        $audiencia = Audiencia::find($id);
+        $audiencia->delete();
+
+        return response()->json(['success' => 'Audiencia eliminada correctamente']);
     }
 }

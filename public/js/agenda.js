@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
         timeZone: "America/Santiago",
         weekends: false,
@@ -23,18 +23,66 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         slotDuration: "00:15:00", // duración de cada intervalo de tiempo
         dateClick: function (info) {
-            $('#audiencia').modal('show');
+            formulario.reset();
+            formulario.start.value = info.dateStr + " 09:00:00";
+            formulario.end.value = info.dateStr + " 10:00:00";
+            $("#audiencia").modal("show");
         },
-        events: "http://localhost/calendario/public/audiencia/mostrar"
+        eventClick: function (info) {
+            var audiencia = info.event;
+            axios.post(baseURL + '/audiencia/editar/' + audiencia.id)
+                .then((respuesta) => {
+                    formulario.id.value = respuesta.data.id;
+                    formulario.title.value = respuesta.data.title;
+                    formulario.start.value = respuesta.data.start;
+                    formulario.end.value = respuesta.data.end;
+                    formulario.tipoAudiencia.value =
+                        respuesta.data.tipoAudiencia;
+                    formulario.sala.value = respuesta.data.sala;
+                    formulario.magis.value = respuesta.data.magis;
+                    formulario.abo_patrocinante.value = respuesta.data.abo_patrocinante;
+                    formulario.textColor.value = respuesta.data.textColor;
+                    formulario.backgroundColor.value =
+                        respuesta.data.backgroundColor;
+                    formulario.observaciones.value =
+                        respuesta.data.observaciones;
+
+                    $("#audiencia").modal("show");
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+
+                    }
+                })
+        },
+        events: baseURL + "/audiencia/mostrar"
 
     });
     calendar.render();
 
     document.getElementById('btnGuardar').addEventListener('click', function () {
-        const datos = new FormData(formulario);
-        console.log(datos)
+        enviarDatos('/audiencia/guardar');
+    })
 
-        axios.post('http://localhost/calendario/public/audiencia/guardar', datos)
+    document.getElementById('btnEditar').addEventListener('click', function () {
+        enviarDatos('/audiencia/actualizar/' + formulario.id.value)
+    })
+
+    document.getElementById('btnEliminar').addEventListener('click', function () {
+        if (formulario.id.value) {
+            enviarDatos('/audiencia/eliminar/' + formulario.id.value);
+        }
+    });
+
+    function enviarDatos(url) {
+        const datos = new FormData(formulario);
+
+        const nuevaURL = baseURL + url
+
+        axios.post(nuevaURL, datos)
             .then(function (respuesta) {
                 console.log(respuesta);
                 $('#audiencia').modal('hide');
@@ -49,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             })
-    })
+    }
 
 });
 

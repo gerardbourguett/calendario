@@ -22,5 +22,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get("/audiencia", [App\Http\Controllers\AudienciaController::class, 'index']);
-Route::post("/audiencia/guardar", [App\Http\Controllers\AudienciaController::class, 'store']);
 Route::get("/audiencia/mostrar", [App\Http\Controllers\AudienciaController::class, 'show']);
+Route::post("/audiencia/guardar", [App\Http\Controllers\AudienciaController::class, 'store']);
+Route::post("/audiencia/editar/{id}", [App\Http\Controllers\AudienciaController::class, 'edit']);
+Route::post("/audiencia/actualizar/{id}", [App\Http\Controllers\AudienciaController::class, 'update']);
+Route::post("/audiencia/eliminar/{id}", [App\Http\Controllers\AudienciaController::class, 'destroy']);
