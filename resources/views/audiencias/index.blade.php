@@ -17,7 +17,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="">
+                <form action="" id="formAudiencia">
 
                     {!! csrf_field() !!}
                     <div class="form-group hidden">
