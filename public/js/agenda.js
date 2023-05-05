@@ -71,11 +71,11 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar.render();
 
     document.getElementById('btnGuardar').addEventListener('click', function () {
-        enviarDatos('/audiencia/guardar');
-    })
-
-    document.getElementById('btnEditar').addEventListener('click', function () {
-        enviarDatos('/audiencia/actualizar/' + formulario.id.value)
+        if (formulario.id.value) {
+            enviarDatos('/audiencia/actualizar/' + formulario.id.value);
+        } else {
+            enviarDatos('/audiencia/guardar');
+        }
     })
 
     document.getElementById('btnEliminar').addEventListener('click', function () {
