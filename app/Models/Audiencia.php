@@ -16,7 +16,6 @@ class Audiencia extends Model
         'tipoAudiencia' => 'required',
         'sala' => 'required',
         'magis' => 'required',
-        'abo_patrocinante' => 'required',
         'textColor' => 'required',
         'backgroundColor' => 'required',
     ];
