@@ -8,22 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        views: {
-            listWeek: {
-                listDayFormat: function (date, events) {
-                    var content = '';
-                    if (events !== undefined) {
-                        events.forEach(function (event) {
-                            content += '<div class="fc-list-item">' +
-                                '<div class="fc-list-item-title">' + event.title + '</div>' +
-                                '</div>';
-                        });
-                    }
-                    return content;
-                }
-            }
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         weekends: false,
         allDaySlot: false,
@@ -89,6 +74,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Hubo un error al cargar los eventos!');
             }
         },
+        eventDidMount: function (info) {
+            var tooltip = new bootstrap.Tooltip(info.el, {
+                title: tooltipContent(info.event),
+                placement: 'top',
+                container: 'body',
+                trigger: 'hover',
+                html: true
+            });
+        },
         eventDrop: function (info) {
             var audiencia = info.event;
             axios.post(baseURL + '/audiencia/mover/' + audiencia.id, {
@@ -147,6 +141,32 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    function tooltipContent(event) {
+        var title = event.title;
+        var sala = event.extendedProps.sala;
+        var magis = event.extendedProps.magis;
+        var abo_patrocinante = event.extendedProps.abo_patrocinante;
+        var observaciones = event.extendedProps.observaciones;
+
+        var content = '<div class="tooltip-title">' + title + '</div>';
+        if (sala) {
+            content += '<div class="tooltip-info">Sala: ' + sala + '</div>';
+        }
+        if (magis) {
+            content += '<div class="tooltip-info">Magistrada/o: ' + magis + '</div>';
+        }
+        if (abo_patrocinante) {
+            content += '<div class="tooltip-info">Patrocinante: ' + abo_patrocinante + '</div>';
+        }
+        if (observaciones) {
+            content += '<div class="tooltip-info">Observaciones: ' + observaciones + '</div>';
+        }
+
+        return content;
+    }
+
+
 
 });
 
