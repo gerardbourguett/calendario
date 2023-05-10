@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let formulario = document.querySelector('#formAudiencia');
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+        initialView: 'timeGridWeek',
         locale: 'es',
         headerToolbar: {
             left: 'prev,next today',
@@ -77,8 +77,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         eventDidMount: function (info) {
-            var tooltip = new bootstrap.Tooltip(info.el, {
-                title: tooltipContent(info.event),
+            var content = "<strong> Sala " + info.event.extendedProps.sala + "</strong><br>";
+            if (info.event.extendedProps.tipoAudiencia) {
+                content += "<strong>Tipo de Audiencia:</strong> " + info.event.extendedProps.tipoAudiencia + "<br>";
+            }
+            if (info.event.extendedProps.magis) {
+                content += "<strong>Magistrado:</strong> " + info.event.extendedProps.magis + "<br>";
+            }
+            if (info.event.extendedProps.abo_patrocinante) {
+                content += "<strong>Abogado/Patrocinante:</strong> " + info.event.extendedProps.abo_patrocinante + "<br>";
+            }
+            if (info.event.extendedProps.observaciones) {
+                content += "<strong>Observaciones:</strong> " + info.event.extendedProps.observaciones + "<br>";
+            }
+            var popover = new bootstrap.Popover(info.el, {
+                title: info.event.title,
+                content: content,
                 placement: 'top',
                 container: 'body',
                 trigger: 'hover',

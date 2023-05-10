@@ -2,7 +2,7 @@
 @section('content')
 
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <button onclick="exportToPdf()"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
 
