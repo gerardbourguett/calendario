@@ -6,6 +6,36 @@
     <div id='calendar'></div>
 </div>
 
+@section('styles')
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+@endsection('styles')
+
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/b-print-2.3.6/fc-4.2.2/r-2.4.1/datatables.min.js"></script>
+@endsection('scripts')
+
+<hr>
+<br>
+
+<div class="container">
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>RIT</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Tipo Audiencia</th>
+                <th>Sala</th>
+                <th>Magistrado</th>
+                <th>Abogado Patrocinante</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="audiencia" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -44,7 +74,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tipoAudiencia">Tipo Audiencia</label>
+                        <label for="tipoAudiencia"></label>
                         <select class="form-control" name="tipoAudiencia" id="tipoAudienciaSelect">
                             <option value="">Selecciona una opción</option>
                             <option value="Audiencia Preparatoria">Audiencia Preparatoria</option>
@@ -122,7 +152,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
-                <button type="button" class="btn btn-primary" id="btnEditar">Editar</button>
+                <button type="button" class="btn btn-primary" id="btnEditar">Actualizar</button>
                 <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
             </div>
@@ -138,6 +168,8 @@
         });
     });
 </script>
+
+
 
 
 @endsection

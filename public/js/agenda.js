@@ -10,7 +10,21 @@ document.addEventListener('DOMContentLoaded', function () {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
-        timeZone: "America/Santiago",
+        views: {
+            listWeek: {
+                listDayFormat: function (date, events) {
+                    var content = '';
+                    if (events !== undefined) {
+                        events.forEach(function (event) {
+                            content += '<div class="fc-list-item">' +
+                                '<div class="fc-list-item-title">' + event.title + '</div>' +
+                                '</div>';
+                        });
+                    }
+                    return content;
+                }
+            }
+        },
         weekends: false,
         allDaySlot: false,
         slotMinTime: "08:00:00",
@@ -21,11 +35,17 @@ document.addEventListener('DOMContentLoaded', function () {
             omitZeroMinute: false,
             meridiem: "short",
         },
+        editable: true,
+        selectable: true,
+        selectHelper: true,
+        eventResizableFromStart: true,
+        eventDurationEditable: true,
+
         slotDuration: "00:15:00", // duración de cada intervalo de tiempo
         dateClick: function (info) {
             formulario.reset();
-            formulario.start.value = info.dateStr + " 09:00:00";
-            formulario.end.value = info.dateStr + " 10:00:00";
+            formulario.start.value = moment(info.date).format('DD-MM-YYYY HH:mm:ss');
+            formulario.end.value = moment(info.date).add(60, 'minutes').format('DD-MM-YYYY HH:mm:ss');
             $("#audiencia").modal("show");
         },
         eventClick: function (info) {
@@ -58,25 +78,46 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
         },
-        eventSources: {
-            url: baseURL + "/audiencia/mostrar",
-            method: "POST",
+        events: {
+            url: baseURL + '/audiencia/mostrar',
+            method: 'POST',
             extraParams: {
-                _token: formulario._token.value
+                _token:
+                    document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            failure: function () {
+                alert('Hubo un error al cargar los eventos!');
             }
+        },
+        eventDrop: function (info) {
+            var audiencia = info.event;
+            axios.post(baseURL + '/audiencia/mover/' + audiencia.id, {
+                start: moment(audiencia.start).format('DD-MM-YYYY HH:mm:ss'),
+                end: moment(audiencia.end).format('DD-MM-YYYY HH:mm:ss')
+            })
+                .then((respuesta) => {
+                    calendar.refetchEvents();
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+
+                    }
+                })
         }
-        /* events: baseURL + "/audiencia/mostrar" */
 
     });
     calendar.render();
 
     document.getElementById('btnGuardar').addEventListener('click', function () {
-        if (formulario.id.value) {
-            enviarDatos('/audiencia/actualizar/' + formulario.id.value);
-        } else {
-            enviarDatos('/audiencia/guardar');
-        }
+        enviarDatos('/audiencia/guardar');
     })
+
+    document.getElementById('btnEditar').addEventListener('click', function () {
+        enviarDatos('/audiencia/actualizar/' + formulario.id.value);
+    });
 
     document.getElementById('btnEliminar').addEventListener('click', function () {
         if (formulario.id.value) {
@@ -86,24 +127,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function enviarDatos(url) {
         const datos = new FormData(formulario);
+        const nuevaURL = baseURL + url;
 
-        const nuevaURL = baseURL + url
-
-        axios.post(nuevaURL, datos)
-            .then(function (respuesta) {
+        $.ajax({
+            url: nuevaURL,
+            type: 'POST',
+            data: datos,
+            processData: false,
+            contentType: false,
+            success: function (respuesta) {
                 console.log(respuesta);
                 $('#audiencia').modal('hide');
                 calendar.refetchEvents();
-            })
-            .catch(function (error) {
-                error => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    }
-                }
-            })
+            },
+            error: function (xhr, textStatus, error) {
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
     }
 
 });

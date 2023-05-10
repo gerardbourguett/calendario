@@ -25,7 +25,7 @@ Route::group(['midleware' => ['auth']], function () {
     Route::post("/audiencia/mostrar", [App\Http\Controllers\AudienciaController::class, 'show']);
     Route::post("/audiencia/guardar", [App\Http\Controllers\AudienciaController::class, 'store']);
     Route::post("/audiencia/editar/{id}", [App\Http\Controllers\AudienciaController::class, 'edit']);
-    Route::post("/audiencia/actualizar/{id}", [App\Http\Controllers\AudienciaController::class, 'update']);
+    Route::post("/audiencia/actualizar/{audiencia}", [App\Http\Controllers\AudienciaController::class, 'update']);
     Route::post("/audiencia/eliminar/{id}", [App\Http\Controllers\AudienciaController::class, 'destroy']);
 });
 
