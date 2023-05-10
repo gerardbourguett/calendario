@@ -100,7 +100,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     }
                 })
-        }
+        },
+        loading: function (isLoading) {
+            if (isLoading) {
+                NProgress.start();
+            } else {
+                NProgress.done();
+            }
+        },
 
     });
     calendar.render();
@@ -123,44 +130,44 @@ document.addEventListener('DOMContentLoaded', function () {
         const datos = new FormData(formulario);
         const nuevaURL = baseURL + url;
 
-        $.ajax({
-            url: nuevaURL,
-            type: 'POST',
-            data: datos,
-            processData: false,
-            contentType: false,
-            success: function (respuesta) {
-                console.log(respuesta);
-                $('#audiencia').modal('hide');
+        axios.post(nuevaURL, datos)
+            .then((respuesta) => {
                 calendar.refetchEvents();
-            },
-            error: function (xhr, textStatus, error) {
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
-            }
-        });
+                $("#audiencia").modal("hide");
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+
+                }
+            })
     }
 
     function tooltipContent(event) {
         var title = event.title;
+        var tipoAudiencia = event.extendedProps.tipoAudiencia;
         var sala = event.extendedProps.sala;
         var magis = event.extendedProps.magis;
         var abo_patrocinante = event.extendedProps.abo_patrocinante;
         var observaciones = event.extendedProps.observaciones;
 
         var content = '<div class="tooltip-title">' + title + '</div>';
+        if (tipoAudiencia) {
+            content += '<div class="tooltip-info">' + tipoAudiencia + '</div>' + '<br>';
+        }
         if (sala) {
-            content += '<div class="tooltip-info">Sala: ' + sala + '</div>';
+            content += '<div class="tooltip-info">Sala: ' + sala + '</div>' + '<br>';
         }
         if (magis) {
-            content += '<div class="tooltip-info">Magistrada/o: ' + magis + '</div>';
+            content += '<div class="tooltip-info">Magistrada/o: ' + magis + '</div>' + '<br>';
         }
         if (abo_patrocinante) {
-            content += '<div class="tooltip-info">Patrocinante: ' + abo_patrocinante + '</div>';
+            content += '<div class="tooltip-info">Patrocinante: ' + abo_patrocinante + '</div>' + '<br>';
         }
         if (observaciones) {
-            content += '<div class="tooltip-info">Observaciones: ' + observaciones + '</div>';
+            content += '<div class="tooltip-info">Observaciones: ' + observaciones + '</div>' + '<br>';
         }
 
         return content;
