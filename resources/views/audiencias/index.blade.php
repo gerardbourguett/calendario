@@ -3,37 +3,12 @@
 
 
 <div class="container">
+    <div class="row">
+        <button onclick="exportToPdf()"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
+
+    </div>
+    <br>
     <div id='calendar'></div>
-</div>
-
-@section('styles')
-<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
-@endsection('styles')
-
-@section('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/b-print-2.3.6/fc-4.2.2/r-2.4.1/datatables.min.js"></script>
-@endsection('scripts')
-
-<hr>
-<br>
-
-<div class="container">
-    <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>RIT</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Tipo Audiencia</th>
-                <th>Sala</th>
-                <th>Magistrado</th>
-                <th>Abogado Patrocinante</th>
-                <th>Observaciones</th>
-            </tr>
-        </thead>
-    </table>
 </div>
 
 <!-- Modal -->
@@ -80,6 +55,7 @@
                             <option value="Audiencia Preparatoria">Audiencia Preparatoria</option>
                             <option value="Audiencia Única">Audiencia Única</option>
                             <option value="Audiencia de Juicio">Audiencia de Juicio</option>
+                            <option value="Audiencia de Juicio">Audiencia de Juicio (Continuación)</option>
                             <option value="Fallo">Fallo</option>
                             <option value="Término Probatorio">Término Probatorio</option>
                         </select>
@@ -109,8 +85,12 @@
                                     textColorInputEl.value = '#000000';
                                     backgroundColorInputEl.value = '#99FF33';
                                     break;
+                                case 'Audiencia de Juicio (Continuación)':
+                                    textColorInputEl.value = '#000000';
+                                    backgroundColorInputEl.value = '#99FF33';
+                                    break;
                                 case 'Fallo':
-                                    textColorInputEl.value = '#FFFFFF';
+                                    textColorInputEl.value = '#000000';
                                     backgroundColorInputEl.value = '#FFA500';
                                     break;
                                 case 'Término Probatorio':
@@ -167,6 +147,25 @@
             step: 30
         });
     });
+
+    function exportToPdf() {
+        // Capturar la vista del calendario como una imagen
+        html2canvas(document.querySelector('#calendar')).then(function(canvas) {
+            // Crear un nuevo documento PDF
+            var pdf = new jsPDF('landscape', 'mm', 'a4');
+
+            // Escalar la imagen para que se ajuste a la página
+            var imgData = canvas.toDataURL('image/png');
+            var imgWidth = pdf.internal.pageSize.getWidth();
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+
+            // Agregar la imagen al documento PDF
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+            // Descargar el documento PDF
+            pdf.save('calendario.pdf');
+        });
+    }
 </script>
 
 

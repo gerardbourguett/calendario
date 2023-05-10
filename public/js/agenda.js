@@ -29,8 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
         slotDuration: "00:15:00", // duración de cada intervalo de tiempo
         dateClick: function (info) {
             formulario.reset();
-            formulario.start.value = moment(info.date).format('DD-MM-YYYY HH:mm:ss');
-            formulario.end.value = moment(info.date).add(60, 'minutes').format('DD-MM-YYYY HH:mm:ss');
+            /* formulario.start.value = info.dateStr;
+            formulario.end.value = info.dateStr; */
+            formulario.start.value = moment(info.dateStr).format("YYYY-MM-DD HH:mm:ss");
+            formulario.end.value = moment(info.dateStr).add(60, 'minutes').format("YYYY-MM-DD HH:mm:ss");
             $("#audiencia").modal("show");
         },
         eventClick: function (info) {
@@ -82,24 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 trigger: 'hover',
                 html: true
             });
-        },
-        eventDrop: function (info) {
-            var audiencia = info.event;
-            axios.post(baseURL + '/audiencia/mover/' + audiencia.id, {
-                start: moment(audiencia.start).format('DD-MM-YYYY HH:mm:ss'),
-                end: moment(audiencia.end).format('DD-MM-YYYY HH:mm:ss')
-            })
-                .then((respuesta) => {
-                    calendar.refetchEvents();
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-
-                    }
-                })
         },
         loading: function (isLoading) {
             if (isLoading) {
@@ -172,8 +156,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         return content;
     }
-
-
 
 });
 
