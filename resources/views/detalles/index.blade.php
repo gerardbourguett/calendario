@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <div class="container">
+        <button onclick="exportToPdf()"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
         <h1>Audiencias del día de hoy</h1>
         <table id="tabla-audiencias" class="display">
             <thead>
@@ -154,5 +155,25 @@
         });
 
     });
+
+    function exportToPdf() {
+        // Capturar la vista del calendario como una imagen
+        html2canvas(document.querySelector('#tabla-audiencias')).then(function(canvas) {
+            // Crear un nuevo documento PDF
+            var pdf = new jsPDF('landscape', 'mm', 'a4');
+
+            // Escalar la imagen para que se ajuste a la página
+            var imgData = canvas.toDataURL('image/png');
+            var imgWidth = pdf.internal.pageSize.getWidth();
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+
+            // Agregar la imagen al documento PDF
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+            // Descargar el documento PDF
+            var revision = 'revision_' + new Date().getTime();
+            pdf.save(revision + '.pdf');
+        });
+    }
 </script>
 @endsection
