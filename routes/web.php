@@ -21,12 +21,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['midleware' => ['auth']], function () {
-    Route::get("/audiencia", [App\Http\Controllers\AudienciaController::class, 'index']);
+    Route::get("/audiencia", [App\Http\Controllers\AudienciaController::class, 'index'])->name('audiencias.index');
     Route::post("/audiencia/mostrar", [App\Http\Controllers\AudienciaController::class, 'show']);
     Route::post("/audiencia/guardar", [App\Http\Controllers\AudienciaController::class, 'store']);
     Route::post("/audiencia/editar/{id}", [App\Http\Controllers\AudienciaController::class, 'edit']);
     Route::post("/audiencia/actualizar/{audiencia}", [App\Http\Controllers\AudienciaController::class, 'update']);
     Route::post("/audiencia/eliminar/{id}", [App\Http\Controllers\AudienciaController::class, 'destroy']);
+
+    Route::get("/detalles", [App\Http\Controllers\DetallesController::class, 'index'])->name('detalles.index');
 });
 
 

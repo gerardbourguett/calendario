@@ -32,6 +32,9 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.4/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.4/locales-all.js"></script>
 
+    <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.min.css">
+
 
     <script type="text/javascript">
         var baseURL = <?php echo json_encode(url('/')); ?>;
@@ -68,8 +71,13 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('audiencias.index') }}">Audiencias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('detalles.index') }}">Detalles</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
