@@ -131,7 +131,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+                <button type="button" class="btn btn-success" id="btnGuardar">Agregar</button>
                 <button type="button" class="btn btn-primary" id="btnEditar">Actualizar</button>
                 <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
