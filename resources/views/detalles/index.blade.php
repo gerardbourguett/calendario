@@ -3,8 +3,20 @@
 @section('content')
 <div class="container">
     <div class="container">
-        <button onclick="exportToPdf()"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
         <h1>Audiencias del día de hoy</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-danger" onclick="exportToPdf('tabla-audiencias')">
+                    <i class="fas fa-file-pdf mr-2"></i>Exportar a PDF
+                </button>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <button id="exportdiario" class="btn btn-success">
+                    <i class="far fa-file-excel mr-2"></i>Exportar a Excel
+                </button>
+            </div>
+        </div>
+        <br>
         <table id="tabla-audiencias" class="display">
             <thead>
                 <tr>
@@ -36,6 +48,19 @@
     </div>
     <div class="container">
         <h1>Audiencias de esta semana</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-danger" onclick="exportToPdf('tabla-semanal')">
+                    <i class="fas fa-file-pdf mr-2"></i>Exportar a PDF
+                </button>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <button id="exportsemanal" class="btn btn-success">
+                    <i class="far fa-file-excel mr-2"></i>Exportar a Excel
+                </button>
+            </div>
+        </div>
+        <br>
         <table id="tabla-semana" class="display">
             <thead>
                 <tr>
@@ -99,66 +124,76 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#tabla-audiencias').DataTable({
-            language: {
-                lengthMenu: 'Mostrando _MENU_ registros por página',
-                zeroRecords: 'No exisen registros - disculpe',
-                info: 'Mostrando página _PAGE_ of _PAGES_',
-                infoEmpty: 'No hay registros disponibles',
-                infoFiltered: '(filtrados de un total de _MAX_ registros)',
-            },
-            responsive: true,
-            autoWidth: false,
-            order: [
-                [1, 'asc']
-            ],
+    const tablas = [{
+            selector: '#tabla-audiencias',
+            options: {
+                language: {
+                    lengthMenu: 'Mostrando _MENU_ registros por página',
+                    zeroRecords: 'No exisen registros - disculpe',
+                    info: 'Mostrando página _PAGE_ of _PAGES_',
+                    infoEmpty: 'No hay registros disponibles',
+                    infoFiltered: '(filtrados de un total de _MAX_ registros)',
+                },
+                responsive: true,
+                autoWidth: false,
+                order: [
+                    [1, 'asc']
+                ]
+            }
+        },
+        {
+            selector: '#tabla-totales',
+            options: {
+                language: {
+                    lengthMenu: 'Mostrando _MENU_ registros por página',
+                    zeroRecords: 'No exisen registros - disculpe',
+                    info: 'Mostrando página _PAGE_ of _PAGES_',
+                    infoEmpty: 'No hay registros disponibles',
+                    infoFiltered: '(filtrados de un total de _MAX_ registros)',
+                },
+                responsive: true,
+                autoWidth: false,
+                order: [
+                    [1, 'asc']
+                ],
+                scrollY: '50vh',
+                scrollCollapse: true,
+                paging: false,
+            }
+        },
+        {
+            selector: '#tabla-semana',
+            options: {
+                language: {
+                    lengthMenu: 'Mostrando _MENU_ registros por página',
+                    zeroRecords: 'No exisen registros - disculpe',
+                    info: 'Mostrando página _PAGE_ of _PAGES_',
+                    infoEmpty: 'No hay registros disponibles',
+                    infoFiltered: '(filtrados de un total de _MAX_ registros)',
+                },
+                responsive: true,
+                autoWidth: false,
+                order: [
+                    [1, 'asc']
+                ],
+                scrollY: '100vh',
+                scrollCollapse: true,
+                paging: false,
 
-        });
+            }
+        }
+    ];
 
-    });
+    for (const tabla of tablas) {
+        if ($(tabla.selector).length) {
+            $(tabla.selector).DataTable(tabla.options);
+        }
+    }
 
-    $(document).ready(function() {
-        $('#tabla-totales').DataTable({
-            language: {
-                lengthMenu: 'Mostrando _MENU_ registros por página',
-                zeroRecords: 'No exisen registros - disculpe',
-                info: 'Mostrando página _PAGE_ of _PAGES_',
-                infoEmpty: 'No hay registros disponibles',
-                infoFiltered: '(filtrados de un total de _MAX_ registros)',
-            },
-            responsive: true,
-            autoWidth: false,
-            order: [
-                [1, 'asc']
-            ],
 
-        });
-
-    });
-
-    $(document).ready(function() {
-        $('#tabla-semana').DataTable({
-            language: {
-                lengthMenu: 'Mostrando _MENU_ registros por página',
-                zeroRecords: 'No exisen registros - disculpe',
-                info: 'Mostrando página _PAGE_ of _PAGES_',
-                infoEmpty: 'No hay registros disponibles',
-                infoFiltered: '(filtrados de un total de _MAX_ registros)',
-            },
-            responsive: true,
-            autoWidth: false,
-            order: [
-                [1, 'asc']
-            ],
-
-        });
-
-    });
-
-    function exportToPdf() {
-        // Capturar la vista del calendario como una imagen
-        html2canvas(document.querySelector('#tabla-audiencias')).then(function(canvas) {
+    function exportToPdf(tableId) {
+        // Capturar la vista de la tabla como una imagen
+        html2canvas(document.querySelector('#' + tableId)).then(function(canvas) {
             // Crear un nuevo documento PDF
             var pdf = new jsPDF('landscape', 'mm', 'a4');
 
@@ -175,5 +210,20 @@
             pdf.save(revision + '.pdf');
         });
     }
+
+
+    document.getElementById("exportdiario").addEventListener('click', function() {
+        /* Create worksheet from HTML DOM TABLE */
+        var wb = XLSX.utils.table_to_book(document.getElementById("tabla-audiencias"));
+        /* Export to file (start a download) */
+        XLSX.writeFile(wb, "SheetJSTable.xlsx");
+    });
+
+    document.getElementById("exportsemanal").addEventListener('click', function() {
+        /* Create worksheet from HTML DOM TABLE */
+        var wb = XLSX.utils.table_to_book(document.getElementById("tabla-semana"));
+        /* Export to file (start a download) */
+        XLSX.writeFile(wb, "SheetJSTable.xlsx");
+    });
 </script>
 @endsection
