@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Audiencia;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DetallesController extends Controller
@@ -14,10 +15,20 @@ class DetallesController extends Controller
      */
     public function index()
     {
-        //
-        $audiencias = Audiencia::select('id', 'title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones')->get();
-        return view('detalles.index', compact('audiencias'));
+        // Obtener los eventos del día actual
+        $events = Audiencia::whereDate('start', Carbon::today())
+            ->get(['id', 'title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
+
+        // Obtener todos los eventos
+        $total_events = Audiencia::get(['id', 'title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
+
+        // Obtener los eventos de la semana en curso
+        $week_events = Audiencia::whereBetween('start', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->get(['id', 'title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
+
+        return view('detalles.index', compact('events', 'total_events', 'week_events'));
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -2,41 +2,157 @@
 
 @section('content')
 <div class="container">
-    <table id="tabla-audiencias" class="display">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Inicio</th>
-                <th>Fin</th>
-                <th>Tipo de audiencia</th>
-                <th>Sala</th>
-                <th>Magistrado</th>
-                <th>Abogado patrocinante</th>
-                <th>Observaciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($audiencias as $audiencia)
-            <tr>
-                <td>{{ $audiencia->id }}</td>
-                <td>{{ $audiencia->title }}</td>
-                <td>{{ $audiencia->start }}</td>
-                <td>{{ $audiencia->end }}</td>
-                <td>{{ $audiencia->tipoAudiencia }}</td>
-                <td>{{ $audiencia->sala }}</td>
-                <td>{{ $audiencia->magis }}</td>
-                <td>{{ $audiencia->abo_patrocinante }}</td>
-                <td>{{ $audiencia->observaciones }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="container">
+        <h1>Audiencias del día de hoy</h1>
+        <table id="tabla-audiencias" class="display">
+            <thead>
+                <tr>
+                    <th>RIT</th>
+                    <th>Hora Inicio</th>
+                    <th>Fin estimado</th>
+                    <th>Tipo de audiencia</th>
+                    <th>Sala</th>
+                    <th>Magistrado</th>
+                    <th>Abogado patrocinante</th>
+                    <th>Observaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($events as $event)
+                <tr>
+                    <td>{{ $event->title }}</td>
+                    <td>{{ Carbon::parse($event->start)->format('d/m/Y H:i') }}</td>
+                    <td>{{ Carbon::parse($event->end)->format('d/m/Y H:i') }}</td>
+                    <td>{{ $event->tipoAudiencia }}</td>
+                    <td>{{ $event->sala }}</td>
+                    <td>{{ $event->magis }}</td>
+                    <td>{{ $event->abo_patrocinante }}</td>
+                    <td>{{ $event->observaciones }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h1>Audiencias de esta semana</h1>
+        <table id="tabla-semana" class="display">
+            <thead>
+                <tr>
+                    <th>RIT</th>
+                    <th>Hora Inicio</th>
+                    <th>Fin estimado</th>
+                    <th>Tipo de audiencia</th>
+                    <th>Sala</th>
+                    <th>Magistrado</th>
+                    <th>Abogado patrocinante</th>
+                    <th>Observaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($week_events as $week_event)
+                <tr>
+                    <td>{{ $week_event->title }}</td>
+                    <td>{{ Carbon::parse($week_event->start)->format('d/m/Y H:i') }}</td>
+                    <td>{{ Carbon::parse($week_event->end)->format('d/m/Y H:i') }}</td>
+                    <td>{{ $week_event->tipoAudiencia }}</td>
+                    <td>{{ $week_event->sala }}</td>
+                    <td>{{ $week_event->magis }}</td>
+                    <td>{{ $week_event->abo_patrocinante }}</td>
+                    <td>{{ $week_event->observaciones }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h1>Todas las audiencias</h1>
+        <table id="tabla-totales" class="display">
+            <thead>
+                <tr>
+                    <th>RIT</th>
+                    <th>Hora Inicio</th>
+                    <th>Fin estimado</th>
+                    <th>Tipo de audiencia</th>
+                    <th>Sala</th>
+                    <th>Magistrado</th>
+                    <th>Abogado patrocinante</th>
+                    <th>Observaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($total_events as $total_event)
+                <tr>
+                    <td>{{ $total_event->title }}</td>
+                    <td>{{ Carbon::parse($total_event->start)->format('d/m/Y H:i') }}</td>
+                    <td>{{ Carbon::parse($total_event->end)->format('d/m/Y H:i') }}</td>
+                    <td>{{ $total_event->tipoAudiencia }}</td>
+                    <td>{{ $total_event->sala }}</td>
+                    <td>{{ $total_event->magis }}</td>
+                    <td>{{ $total_event->abo_patrocinante }}</td>
+                    <td>{{ $total_event->observaciones }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
     $(document).ready(function() {
-        $('#tabla-audiencias').DataTable();
+        $('#tabla-audiencias').DataTable({
+            language: {
+                lengthMenu: 'Mostrando _MENU_ registros por página',
+                zeroRecords: 'No exisen registros - disculpe',
+                info: 'Mostrando página _PAGE_ of _PAGES_',
+                infoEmpty: 'No hay registros disponibles',
+                infoFiltered: '(filtrados de un total de _MAX_ registros)',
+            },
+            responsive: true,
+            autoWidth: false,
+            order: [
+                [1, 'asc']
+            ],
+
+        });
+
+    });
+
+    $(document).ready(function() {
+        $('#tabla-totales').DataTable({
+            language: {
+                lengthMenu: 'Mostrando _MENU_ registros por página',
+                zeroRecords: 'No exisen registros - disculpe',
+                info: 'Mostrando página _PAGE_ of _PAGES_',
+                infoEmpty: 'No hay registros disponibles',
+                infoFiltered: '(filtrados de un total de _MAX_ registros)',
+            },
+            responsive: true,
+            autoWidth: false,
+            order: [
+                [1, 'asc']
+            ],
+
+        });
+
+    });
+
+    $(document).ready(function() {
+        $('#tabla-semana').DataTable({
+            language: {
+                lengthMenu: 'Mostrando _MENU_ registros por página',
+                zeroRecords: 'No exisen registros - disculpe',
+                info: 'Mostrando página _PAGE_ of _PAGES_',
+                infoEmpty: 'No hay registros disponibles',
+                infoFiltered: '(filtrados de un total de _MAX_ registros)',
+            },
+            responsive: true,
+            autoWidth: false,
+            order: [
+                [1, 'asc']
+            ],
+
+        });
+
     });
 </script>
 @endsection
