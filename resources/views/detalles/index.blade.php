@@ -4,20 +4,7 @@
 <div class="container">
     <div class="container">
         <h1>Audiencias del día de hoy</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <button class="btn btn-danger" onclick="exportToPdf('tabla-audiencias')">
-                    <i class="fas fa-file-pdf mr-2"></i>Exportar a PDF
-                </button>
-            </div>
-            <div class="col-md-6 text-md-right">
-                <button id="exportdiario" class="btn btn-success">
-                    <i class="far fa-file-excel mr-2"></i>Exportar a Excel
-                </button>
-            </div>
-        </div>
-        <br>
-        <table id="tabla-audiencias" class="display">
+        <table id="tabla-audiencias" class="hover">
             <thead>
                 <tr>
                     <th>RIT</th>
@@ -48,20 +35,7 @@
     </div>
     <div class="container">
         <h1>Audiencias de esta semana</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <button class="btn btn-danger" onclick="exportToPdf('tabla-semanal')">
-                    <i class="fas fa-file-pdf mr-2"></i>Exportar a PDF
-                </button>
-            </div>
-            <div class="col-md-6 text-md-right">
-                <button id="exportsemanal" class="btn btn-success">
-                    <i class="far fa-file-excel mr-2"></i>Exportar a Excel
-                </button>
-            </div>
-        </div>
-        <br>
-        <table id="tabla-semana" class="display">
+        <table id="tabla-semana" class="display compact">
             <thead>
                 <tr>
                     <th>RIT</th>
@@ -138,7 +112,41 @@
                 autoWidth: false,
                 order: [
                     [1, 'asc']
-                ]
+                ],
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel mr-2"></i>Exportar a Excel',
+                        className: 'btn btn-success',
+                        title: 'Audiencias del día de hoy' + ' - ' + moment().format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf mr-2"></i>Exportar a PDF',
+                        className: 'btn btn-danger',
+                        title: 'Audiencias del día de hoy' + ' - ' + moment().format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print mr-2"></i>Imprimir',
+                        className: 'btn btn-secondary',
+                        title: 'Audiencias del día de hoy' + ' - ' + moment().format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Ocultar columnas',
+                        className: 'btn btn-info',
+                    },
+                ],
             }
         },
         {
@@ -176,10 +184,43 @@
                 order: [
                     [1, 'asc']
                 ],
-                scrollY: '100vh',
-                scrollCollapse: true,
                 paging: false,
-
+                ordering: false,
+                info: false,
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel mr-2"></i>Exportar a Excel',
+                        className: 'btn btn-success',
+                        title: 'Audiencias de la semana desde ' + moment().isoWeekday(1).format('DD/MM/YYYY') + ' hasta ' + moment().isoWeekday(7).format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf mr-2"></i>Exportar a PDF',
+                        className: 'btn btn-danger',
+                        title: 'Audiencias de la semana desde ' + moment().isoWeekday(1).format('DD/MM/YYYY') + ' hasta ' + moment().isoWeekday(7).format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print mr-2"></i>Imprimir',
+                        className: 'btn btn-secondary',
+                        title: 'Audiencias de la semana desde ' + moment().isoWeekday(1).format('DD/MM/YYYY') + ' hasta ' + moment().isoWeekday(7).format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Ocultar columnas',
+                        className: 'btn btn-info',
+                    },
+                ],
             }
         }
     ];
@@ -189,41 +230,5 @@
             $(tabla.selector).DataTable(tabla.options);
         }
     }
-
-
-    function exportToPdf(tableId) {
-        // Capturar la vista de la tabla como una imagen
-        html2canvas(document.querySelector('#' + tableId)).then(function(canvas) {
-            // Crear un nuevo documento PDF
-            var pdf = new jsPDF('landscape', 'mm', 'a4');
-
-            // Escalar la imagen para que se ajuste a la página
-            var imgData = canvas.toDataURL('image/png');
-            var imgWidth = pdf.internal.pageSize.getWidth();
-            var imgHeight = canvas.height * imgWidth / canvas.width;
-
-            // Agregar la imagen al documento PDF
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-
-            // Descargar el documento PDF
-            var revision = 'revision_' + new Date().getTime();
-            pdf.save(revision + '.pdf');
-        });
-    }
-
-
-    document.getElementById("exportdiario").addEventListener('click', function() {
-        /* Create worksheet from HTML DOM TABLE */
-        var wb = XLSX.utils.table_to_book(document.getElementById("tabla-audiencias"));
-        /* Export to file (start a download) */
-        XLSX.writeFile(wb, "SheetJSTable.xlsx");
-    });
-
-    document.getElementById("exportsemanal").addEventListener('click', function() {
-        /* Create worksheet from HTML DOM TABLE */
-        var wb = XLSX.utils.table_to_book(document.getElementById("tabla-semana"));
-        /* Export to file (start a download) */
-        XLSX.writeFile(wb, "SheetJSTable.xlsx");
-    });
 </script>
 @endsection
