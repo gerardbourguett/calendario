@@ -22,10 +22,10 @@ class CreateAudienciasTable extends Migration
             $table->string("tipoAudiencia", 255);
             $table->string("sala", 255);
             $table->string("magis", 255);
-            $table->string("abo_patrocinante", 255);
+            $table->string("abo_patrocinante", 255)->nullable();
             $table->string("textColor", 7);
             $table->string("backgroundColor", 7);
-            $table->string("observaciones", 255);
+            $table->string("observaciones", 255)->nullable();
 
             $table->timestamps();
         });
