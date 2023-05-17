@@ -4,7 +4,7 @@
 <div class="container">
     <div class="container">
         <h1>Audiencias del día de hoy</h1>
-        <table id="tabla-audiencias" class="hover">
+        <table id="tabla-audiencias" class="display">
             <thead>
                 <tr>
                     <th>RIT</th>

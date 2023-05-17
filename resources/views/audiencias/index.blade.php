@@ -5,7 +5,6 @@
 <div class="container-fluid">
     <div class="row">
         <button onclick="exportToPdf()"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
-        <button id="export-button">Exportar a PDF</button>
 
     </div>
     <br>
