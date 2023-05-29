@@ -17,14 +17,14 @@ class DetallesController extends Controller
     {
         // Obtener los eventos del día actual
         $events = Audiencia::whereDate('start', Carbon::today())
-            ->get(['id', 'title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
+            ->get(['id', 'title', 'start', 'end', 'tipo_audiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
 
         // Obtener todos los eventos
-        $total_events = Audiencia::get(['id', 'title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
+        $total_events = Audiencia::get(['id', 'title', 'start', 'end', 'tipo_audiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
 
         // Obtener los eventos de la semana en curso
         $week_events = Audiencia::whereBetween('start', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->get(['id', 'title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
+            ->get(['id', 'title', 'start', 'end', 'tipo_audiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones']);
 
         return view('detalles.index', compact('events', 'total_events', 'week_events'));
     }

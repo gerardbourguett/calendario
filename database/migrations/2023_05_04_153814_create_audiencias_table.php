@@ -19,7 +19,7 @@ class CreateAudienciasTable extends Migration
             $table->string("title", 255);
             $table->dateTime("start");
             $table->dateTime("end");
-            $table->string("tipoAudiencia", 255);
+            $table->string("tipo_audiencia", 255);
             $table->string("sala", 255);
             $table->string("magis", 255);
             $table->string("abo_patrocinante", 255)->nullable();

@@ -73,6 +73,10 @@
         var baseURL = <?php echo json_encode(url('/')); ?>;
     </script>
 
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+
+
 
     <link href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/datatables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" />
