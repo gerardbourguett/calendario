@@ -55,7 +55,7 @@
                             <option value="Audiencia Preparatoria">Audiencia Preparatoria</option>
                             <option value="Audiencia Única">Audiencia Única</option>
                             <option value="Audiencia de Juicio">Audiencia de Juicio</option>
-                            <option value="Audiencia de Juicio">Audiencia de Juicio (Continuación)</option>
+                            <option value="Audiencia de Juicio (Continuación)">Audiencia de Juicio (Continuación)</option>
                             <option value="Fallo">Fallo</option>
                             <option value="Término Probatorio">Término Probatorio</option>
                         </select>
@@ -86,7 +86,7 @@
                                     backgroundColorInputEl.value = '#99FF33';
                                     break;
                                 case 'Audiencia de Juicio (Continuación)':
-                                    textColorInputEl.value = '#000000';
+                                    textColorInputEl.value = '#C00000';
                                     backgroundColorInputEl.value = '#99FF33';
                                     break;
                                 case 'Fallo':

@@ -76,8 +76,8 @@ class AudienciaController extends Controller
         $audiencia = Audiencia::find($id);
 
         // Transformar los nombres de los atributos a minúsculas
-        $audiencia->textColor = $audiencia->backgroundcolor;
-        $audiencia->backgroundColor = $audiencia->textcolor;
+        $audiencia->textColor = $audiencia->textcolor;
+        $audiencia->backgroundColor = $audiencia->backgroundcolor;
         unset($audiencia->textcolor);
         unset($audiencia->backgroundcolor);
 
