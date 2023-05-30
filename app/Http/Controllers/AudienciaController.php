@@ -55,10 +55,10 @@ class AudienciaController extends Controller
 
         // Transformar los nombres de los atributos a minúsculas
         $audiencias = $audiencias->map(function ($item) {
-            $item->textColor = $item->BACKGROUNDCOLOR;
-            $item->backgroundColor = $item->TEXTCOLOR;
-            unset($item->TEXTCOLOR);
-            unset($item->BACKGROUNDCOLOR);
+            $item->textColor = $item->textcolor;
+            $item->backgroundColor = $item->backgroundcolor;
+            unset($item->backgroundcolor);
+            unset($item->textcolor);
             return $item;
         });
 
@@ -76,10 +76,10 @@ class AudienciaController extends Controller
         $audiencia = Audiencia::find($id);
 
         // Transformar los nombres de los atributos a minúsculas
-        $audiencia->textColor = $audiencia->BACKGROUNDCOLOR;
-        $audiencia->backgroundColor = $audiencia->TEXTCOLOR;
-        unset($audiencia->TEXTCOLOR);
-        unset($audiencia->BACKGROUNDCOLOR);
+        $audiencia->textColor = $audiencia->backgroundcolor;
+        $audiencia->backgroundColor = $audiencia->textcolor;
+        unset($audiencia->textcolor);
+        unset($audiencia->backgroundcolor);
 
         return response()->json($audiencia);
     }

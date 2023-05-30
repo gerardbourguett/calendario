@@ -47,9 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     formulario.sala.value = respuesta.data.sala;
                     formulario.magis.value = respuesta.data.magis;
                     formulario.abo_patrocinante.value = respuesta.data.abo_patrocinante;
-                    formulario.textColor.value = respuesta.data.textColor;
-                    formulario.backgroundColor.value =
-                        respuesta.data.backgroundColor;
+                    formulario.textColor.style.textColor = respuesta.data.textColor;
+                    formulario.backgroundColor.style.backgroundColor = respuesta.data.backgroundColor;
                     formulario.observaciones.value =
                         respuesta.data.observaciones;
 
