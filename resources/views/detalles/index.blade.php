@@ -101,13 +101,6 @@
     const tablas = [{
             selector: '#tabla-audiencias',
             options: {
-                language: {
-                    lengthMenu: 'Mostrando _MENU_ registros por página',
-                    zeroRecords: 'No exisen registros - disculpe',
-                    info: 'Mostrando página _PAGE_ of _PAGES_',
-                    infoEmpty: 'No hay registros disponibles',
-                    infoFiltered: '(filtrados de un total de _MAX_ registros)',
-                },
                 responsive: true,
                 autoWidth: false,
                 order: [
@@ -152,13 +145,6 @@
         {
             selector: '#tabla-totales',
             options: {
-                language: {
-                    lengthMenu: 'Mostrando _MENU_ registros por página',
-                    zeroRecords: 'No exisen registros - disculpe',
-                    info: 'Mostrando página _PAGE_ of _PAGES_',
-                    infoEmpty: 'No hay registros disponibles',
-                    infoFiltered: '(filtrados de un total de _MAX_ registros)',
-                },
                 responsive: true,
                 autoWidth: false,
                 order: [
@@ -167,26 +153,53 @@
                 scrollY: '50vh',
                 scrollCollapse: true,
                 paging: false,
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel mr-2"></i>Exportar a Excel',
+                        className: 'btn btn-success',
+                        title: 'Audiencias de la semana desde ' + moment().isoWeekday(1).format('DD/MM/YYYY') + ' hasta ' + moment().isoWeekday(7).format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf mr-2"></i>Exportar a PDF',
+                        className: 'btn btn-danger',
+                        title: 'Audiencias de la semana desde ' + moment().isoWeekday(1).format('DD/MM/YYYY') + ' hasta ' + moment().isoWeekday(7).format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print mr-2"></i>Imprimir',
+                        className: 'btn btn-secondary',
+                        title: 'Audiencias de la semana desde ' + moment().isoWeekday(1).format('DD/MM/YYYY') + ' hasta ' + moment().isoWeekday(7).format('DD/MM/YYYY'),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Ocultar columnas',
+                        className: 'btn btn-info',
+                    },
+                ],
             }
         },
         {
             selector: '#tabla-semana',
             options: {
-                language: {
-                    lengthMenu: 'Mostrando _MENU_ registros por página',
-                    zeroRecords: 'No exisen registros - disculpe',
-                    info: 'Mostrando página _PAGE_ of _PAGES_',
-                    infoEmpty: 'No hay registros disponibles',
-                    infoFiltered: '(filtrados de un total de _MAX_ registros)',
-                },
                 responsive: true,
                 autoWidth: false,
                 order: [
                     [1, 'asc']
                 ],
+                scrollY: '50vh',
+                scrollCollapse: true,
                 paging: false,
-                ordering: false,
-                info: false,
                 dom: 'Bfrtip',
                 buttons: [{
                         extend: 'excelHtml5',
