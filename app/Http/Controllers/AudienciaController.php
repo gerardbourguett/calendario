@@ -51,9 +51,18 @@ class AudienciaController extends Controller
      */
     public function show(Audiencia $audiencia)
     {
-        //
-        $audiencia = Audiencia::all();
-        return response()->json($audiencia);
+        $audiencias = Audiencia::all();
+
+        // Transformar los nombres de los atributos a minúsculas
+        $audiencias = $audiencias->map(function ($item) {
+            $item->textColor = $item->textcolor;
+            $item->backgroundColor = $item->backgroundcolor;
+            unset($item->backgroundcolor);
+            unset($item->textcolor);
+            return $item;
+        });
+
+        return response()->json($audiencias);
     }
 
     /**
@@ -64,8 +73,14 @@ class AudienciaController extends Controller
      */
     public function edit($id)
     {
-        //
         $audiencia = Audiencia::find($id);
+
+        // Transformar los nombres de los atributos a minúsculas
+        $audiencia->textColor = $audiencia->textcolor;
+        $audiencia->backgroundColor = $audiencia->backgroundcolor;
+        unset($audiencia->textcolor);
+        unset($audiencia->backgroundcolor);
+
         return response()->json($audiencia);
     }
 

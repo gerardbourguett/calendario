@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'oracle'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,6 +91,35 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'oracle' => [
+            'driver'         => 'oracle',
+            'tns'            => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=xe)))',
+            'host'           => env('DB_HOST', 'localhost'),
+            'port'           => env('DB_PORT', '1521'),
+            'database'       => env('DB_DATABASE', 'baselaboral'),
+            'username'       => env('DB_USERNAME', 'laboral'),
+            'password'       => env('DB_PASSWORD', 'laboral925'),
+            'charset'        => 'utf8',
+            'prefix'         => '',
+            'prefix_schema'  => '',
+            'edition'        => env('DB_EDITION', 'ora$base'),
+            'server_version' => env('DB_SERVER_VERSION', '21'),
+            'options'        => [
+                PDO::ATTR_PERSISTENT         => true,
+                PDO::ATTR_EMULATE_PREPARES   => true,
+                PDO::ATTR_STRINGIFY_FETCHES  => false,
+                PDO::ATTR_CASE               => PDO::CASE_LOWER,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_ORACLE_NULLS       => PDO::NULL_NATURAL,
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_STATEMENT_CLASS    => [OCIStatement::class],
+                PDO::ATTR_FETCH_TABLE_NAMES  => true,
+                PDO::ATTR_PERSISTENT         => false,
+                PDO::ATTR_DRIVER_NAME        => 'oracle',
+                PDO::ATTR_SERVER_VERSION     => '21',
+                PDO::ATTR_CONNECTION_STATUS  => 'Connected',
+            ],
+        ],
     ],
 
     /*

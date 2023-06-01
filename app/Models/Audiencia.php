@@ -13,14 +13,14 @@ class Audiencia extends Model
         'title' => 'required',
         'start' => 'required',
         'end' => 'required',
-        'tipoAudiencia' => 'required',
+        'tipo_audiencia' => 'required',
         'sala' => 'required',
         'magis' => 'required',
         'textColor' => 'required',
         'backgroundColor' => 'required',
     ];
 
-    protected $fillable = ['title', 'start', 'end', 'tipoAudiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones', 'textColor', 'backgroundColor'];
+    protected $fillable = ['title', 'start', 'end', 'tipo_audiencia', 'sala', 'magis', 'abo_patrocinante', 'observaciones', 'textColor', 'backgroundColor'];
 
     protected $primaryKey = 'id';
     public $incrementing = true;
