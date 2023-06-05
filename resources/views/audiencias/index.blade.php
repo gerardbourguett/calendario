@@ -49,8 +49,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tipo_audiencia"></label>
-                        <select class="form-control" name="tipo_audiencia" id="tipo_audienciaSelect">
+                        <label for="tipoAudiencia"></label>
+                        <select class="form-control" name="tipoAudiencia" id="tipoAudienciaSelect">
                             <option value="">Selecciona una opción</option>
                             <option value="Audiencia Preparatoria">Audiencia Preparatoria</option>
                             <option value="Audiencia Única">Audiencia Única</option>
@@ -65,11 +65,11 @@
                     </div>
 
                     <script>
-                        const tipo_audienciaSelectEl = document.querySelector('#tipo_audienciaSelect');
+                        const tipoAudienciaSelectEl = document.querySelector('#tipoAudienciaSelect');
                         const backgroundColorInputEl = document.querySelector('#backgroundColor');
                         const textColorInputEl = document.querySelector('#textColor');
                         // Manejar el evento "change" del select para detectar cambios en la selección
-                        tipo_audienciaSelectEl.addEventListener('change', (event) => {
+                        tipoAudienciaSelectEl.addEventListener('change', (event) => {
                             const selectedValue = event.target.value;
                             // Actualizar el valor de los campos de texto según la opción seleccionada
                             switch (selectedValue) {

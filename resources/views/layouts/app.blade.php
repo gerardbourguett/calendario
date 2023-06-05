@@ -73,8 +73,8 @@
         var baseURL = <?php echo json_encode(url('/')); ?>;
     </script>
 
-<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 
 
 
@@ -154,6 +154,7 @@
                 </div>
             </div>
         </nav>
+        <script src="{{ asset('js/agenda.js') }}" defer></script>
         <main class="py-4">
             @yield('content')
         </main>

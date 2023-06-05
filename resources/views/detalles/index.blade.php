@@ -23,7 +23,7 @@
                     <td>{{ $event->title }}</td>
                     <td>{{ Carbon::parse($event->start)->format('d/m/Y H:i') }}</td>
                     <td>{{ Carbon::parse($event->end)->format('d/m/Y H:i') }}</td>
-                    <td>{{ $event->tipo_audiencia }}</td>
+                    <td>{{ $event->tipoAudiencia }}</td>
                     <td>{{ $event->sala }}</td>
                     <td>{{ $event->magis }}</td>
                     <td>{{ $event->abo_patrocinante }}</td>
@@ -54,7 +54,7 @@
                     <td>{{ $week_event->title }}</td>
                     <td>{{ Carbon::parse($week_event->start)->format('d/m/Y H:i') }}</td>
                     <td>{{ Carbon::parse($week_event->end)->format('d/m/Y H:i') }}</td>
-                    <td>{{ $week_event->tipo_audiencia }}</td>
+                    <td>{{ $week_event->tipoAudiencia }}</td>
                     <td>{{ $week_event->sala }}</td>
                     <td>{{ $week_event->magis }}</td>
                     <td>{{ $week_event->abo_patrocinante }}</td>
@@ -85,7 +85,7 @@
                     <td>{{ $total_event->title }}</td>
                     <td>{{ Carbon::parse($total_event->start)->format('d/m/Y H:i') }}</td>
                     <td>{{ Carbon::parse($total_event->end)->format('d/m/Y H:i') }}</td>
-                    <td>{{ $total_event->tipo_audiencia }}</td>
+                    <td>{{ $total_event->tipoAudiencia }}</td>
                     <td>{{ $total_event->sala }}</td>
                     <td>{{ $total_event->magis }}</td>
                     <td>{{ $total_event->abo_patrocinante }}</td>

@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     formulario.title.value = respuesta.data.title;
                     formulario.start.value = respuesta.data.start;
                     formulario.end.value = respuesta.data.end;
-                    formulario.tipo_audiencia.value =
-                        respuesta.data.tipo_audiencia;
+                    formulario.tipoAudiencia.value =
+                        respuesta.data.tipoAudiencia;
                     formulario.sala.value = respuesta.data.sala;
                     formulario.magis.value = respuesta.data.magis;
                     formulario.abo_patrocinante.value = respuesta.data.abo_patrocinante;
@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         eventDidMount: function (info) {
             var content = "<strong> Sala " + info.event.extendedProps.sala + "</strong><br>";
-            if (info.event.extendedProps.tipo_audiencia) {
-                content += "<strong>Tipo de Audiencia:</strong> " + info.event.extendedProps.tipo_audiencia + "<br>";
+            if (info.event.extendedProps.tipoAudiencia) {
+                content += "<strong>Tipo de Audiencia:</strong> " + info.event.extendedProps.tipoAudiencia + "<br>";
             }
             if (info.event.extendedProps.magis) {
                 content += "<strong>Magistrado:</strong> " + info.event.extendedProps.magis + "<br>";
@@ -143,15 +143,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function tooltipContent(event) {
         var title = event.title;
-        var tipo_audiencia = event.extendedProps.tipo_audiencia;
+        var tipoAudiencia = event.extendedProps.tipoAudiencia;
         var sala = event.extendedProps.sala;
         var magis = event.extendedProps.magis;
         var abo_patrocinante = event.extendedProps.abo_patrocinante;
         var observaciones = event.extendedProps.observaciones;
 
         var content = '<div class="tooltip-title">' + title + '</div>';
-        if (tipo_audiencia) {
-            content += '<div class="tooltip-info">' + tipo_audiencia + '</div>' + '<br>';
+        if (tipoAudiencia) {
+            content += '<div class="tooltip-info">' + tipoAudiencia + '</div>' + '<br>';
         }
         if (sala) {
             content += '<div class="tooltip-info">Sala: ' + sala + '</div>' + '<br>';
